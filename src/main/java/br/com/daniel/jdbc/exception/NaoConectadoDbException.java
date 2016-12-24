@@ -6,7 +6,8 @@ import java.sql.SQLException;
  * @author Daniel
  * @version 1.0.0
  * 
- * Classe representa uma exceção caso ocorra alguma falha na conexão com o banco de dados
+ * Classe representa uma exceção caso ocorra alguma falha 
+ * na conexão com o banco de dados
  * 
  */
 public class NaoConectadoDbException extends SQLException {
