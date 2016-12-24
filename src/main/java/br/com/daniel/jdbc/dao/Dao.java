@@ -1,9 +1,8 @@
 package br.com.daniel.jdbc.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
-
-import com.mysql.cj.jdbc.PreparedStatement;
 
 import br.com.daniel.jdbc.conexao.Conexao;
 import br.com.daniel.jdbc.exception.NaoConectadoDbException;
