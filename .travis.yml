@@ -1,0 +1,3 @@
+languagem: java
+jdk:
+ - oraclejdk8
