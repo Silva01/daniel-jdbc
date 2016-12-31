@@ -1,5 +1,6 @@
 package br.com.daniel.jdbc.util;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 
 /**
@@ -35,5 +36,35 @@ public class Utilidades {
 			return (T) Float.valueOf(String.valueOf(obj));
 		}
 		return null;
+	}
+	
+	/**
+	 * Preenche o PreparedStatemt por tipo
+	 * 
+	 * @param stm
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	public static PreparedStatement preencherCampos(final PreparedStatement stm, final Object...params) throws Exception{
+		for (int i = 0; i < params.length; i++) {
+			if (params[i] instanceof String) {
+				stm.setString(i, Utilidades.convertTo(params[i]));
+			} else if (params[i] instanceof Integer) {
+				stm.setInt(i, Utilidades.convertTo(params[i]));
+			} else if (params[i] instanceof Boolean) {
+				stm.setBoolean(i, Utilidades.convertTo(params[i]));
+			} else if (params[i] instanceof Date) {
+				stm.setDate(i, Utilidades.convertTo(params[i]));
+			} else if (params[i] instanceof Double) {
+				stm.setDouble(i, Utilidades.convertTo(params[i]));
+			} else if (params[i] instanceof Float) {
+				stm.setFloat(i, Utilidades.convertTo(params[i]));
+			} else {
+				stm.setObject(i, params[i]);
+			}
+		}
+		
+		return stm;
 	}
 }
