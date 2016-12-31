@@ -9,18 +9,13 @@ import br.com.daniel.jdbc.util.Utilidades;
 
 public class Dao {
 
-	private Conexao conn;
-	private PreparedStatement stm;
-	
-	public Dao(final Conexao conn) {
-		this.conn = conn;
-	}
 	
 	public ResultSet select(final String query){
 		try {
-			this.stm = (PreparedStatement) conn.conectarMysql().prepareStatement(query);
+			Conexao conn = new Conexao();
+			PreparedStatement stm = (PreparedStatement) conn.conectarMysql().prepareStatement(query);
 			ResultSet result = stm.executeQuery();
-			this.stm.close();
+			stm.close();
 			conn.conectarMysql().close();
 			return result;
 		} catch (NaoConectadoDbException e) {
@@ -34,12 +29,13 @@ public class Dao {
 	
 	public ResultSet select(final String query, final Object...params){
 		try {
-			this.stm = (PreparedStatement) conn.conectarMysql().prepareStatement(query);
-			this.stm = Utilidades.preencherCampos(this.stm, params);
+			Conexao conn = new Conexao();
+			PreparedStatement stm = (PreparedStatement) conn.conectarMysql().prepareStatement(query);
+			stm = Utilidades.preencherCampos(stm, params);
 			
-			ResultSet resul = this.stm.executeQuery();
-			this.stm.close();
-			this.conn.conectarMysql().close();
+			ResultSet resul = stm.executeQuery();
+			stm.close();
+			conn.conectarMysql().close();
 			return resul;
 			 
 		} catch (NaoConectadoDbException e) {
@@ -53,11 +49,12 @@ public class Dao {
 	
 	public boolean insert(final String query, final Object...params){
 		try {
-			this.stm = conn.conectarMysql().prepareStatement(query);
-			this.stm = Utilidades.preencherCampos(stm, params);
-			boolean result = this.stm.execute();
-			this.stm.close();
-			this.conn.conectarMysql().close();
+			Conexao conn = new Conexao();
+			PreparedStatement stm = conn.conectarMysql().prepareStatement(query);
+			stm = Utilidades.preencherCampos(stm, params);
+			boolean result = stm.execute();
+			stm.close();
+			conn.conectarMysql().close();
 			return result;
 		} catch (NaoConectadoDbException e) {
 			new NaoConectadoDbException(e);
