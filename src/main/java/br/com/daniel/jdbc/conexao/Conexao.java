@@ -1,7 +1,9 @@
 package br.com.daniel.jdbc.conexao;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import br.com.daniel.jdbc.exception.NaoConectadoDbException;
 
@@ -21,10 +23,10 @@ public class Conexao {
 	private String passDb;
 	
 	
-	public Conexao(String host, String userDb, String passDb) {		
-		this.host = host;
-		this.userDb = userDb;
-		this.passDb = passDb;
+	public Conexao() {		
+		this.host = this.dados("db.host");
+		this.userDb = this.dados("db.user");
+		this.passDb = this.dados("db.pass");
 	}
 	
 
@@ -60,5 +62,22 @@ public class Conexao {
 	
 	public Connection conectarSqlServer(){
 		return null;
+	}
+	
+	/**
+	 * @param campo do arquivo
+	 * @return dados do campo que se encontra no arquivo .properties
+	 * 
+	 * Ler o arquivo de propriedades e retorna os dados dos campos de acordo
+	 * com o campo passado por parametro
+	 */
+	private String dados(final String campo){
+		try (FileInputStream file = new FileInputStream("propriedades.properties")){			
+			Properties prop = new Properties();			
+			prop.load(file);
+			return prop.getProperty(campo);			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
