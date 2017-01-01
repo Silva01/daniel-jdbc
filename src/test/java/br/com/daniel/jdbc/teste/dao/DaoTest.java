@@ -8,11 +8,12 @@ import org.junit.Test;
 
 import br.com.daniel.jdbc.conexao.Conexao;
 import br.com.daniel.jdbc.dao.Dao;
+import br.com.daniel.jdbc.exception.ExceptionDatabase;
 
 public class DaoTest {
 
 	@Test
-	public void deveraRealizarUmSelect() throws SQLException{
+	public void deveraRealizarUmSelect() throws ExceptionDatabase, Exception{
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
 				.dql(new Conexao().conectarMysql())
@@ -33,7 +34,7 @@ public class DaoTest {
 	}
 	
 	@Test
-	public void deveraRealizarUmSelectComParametros() throws SQLException{
+	public void deveraRealizarUmSelectComParametros() throws ExceptionDatabase, Exception{
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
 				.dql(new Conexao().conectarMysql())
@@ -54,7 +55,7 @@ public class DaoTest {
 	}
 	
 	@Test
-	public void deveraRealizarUmInsertNaBaseDeDados() throws SQLException{
+	public void deveraRealizarUmInsertNaBaseDeDados() throws ExceptionDatabase, Exception{
  		Dao dao = new Dao();
  		
  		Boolean result = dao.sid().dml(new Conexao().conectarMysql())
@@ -81,7 +82,7 @@ public class DaoTest {
 
 	
 	@Test
-	public void deveraAtualizarUmRegistroNaBaseDeDados() throws SQLException{
+	public void deveraAtualizarUmRegistroNaBaseDeDados() throws ExceptionDatabase, Exception{
 		Dao dao = new Dao();
 		Integer id = null;
 		String nomeSemUpdate = null;
@@ -135,7 +136,7 @@ public class DaoTest {
 	}
 	
 	@Test
-	public void deveraExcluirUmRegistro() throws SQLException {
+	public void deveraExcluirUmRegistro() throws ExceptionDatabase, Exception {
 		Dao dao = new Dao();
 		int quantidadeDeRegistros = 0;		
 		

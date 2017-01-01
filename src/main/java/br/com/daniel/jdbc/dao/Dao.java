@@ -73,29 +73,27 @@ public class Dao {
 			 * @param Instrução de banco de dados
 			 * @param Parametros de consulta
 			 * @return Consulta do banco de dados
-			 * @throws SQLException
+			 * @throws NaoConectadoDbException 
+			 * @throws ExceptionDatabase 
+			 * @throws Exception 
 			 * 
 			 * Realiza uma consulta ao banco de dados utilizando parametros de filtros 
 			 * 
 			 */
-			public Dql select(final String query, final Object...params) {			
+			public Dql select(final String query, final Object...params) throws NaoConectadoDbException, ExceptionDatabase {			
 				try {
-					this.stm = (PreparedStatement) conn.prepareStatement(query);
+					this.stm = conn.prepareStatement(query);
 					
-					if (params != null) {
-						if (params.length > 0) {
-							this.stm = Utilidades.preencherCampos(this.stm, params);
-						}					
+					if (params != null && params.length > 0) {						
+						this.stm = Utilidades.preencherCampos(this.stm, params);										
 					}			
 					
 					return this;
 					 
 				} catch (NaoConectadoDbException e) {
-					new NaoConectadoDbException(e);
-					return null;
+					throw new NaoConectadoDbException(e);					
 				} catch (Exception e) {
-					new Exception(e);
-					return null;
+					throw new ExceptionDatabase(e);					
 				} 
 			}
 			
@@ -103,13 +101,13 @@ public class Dao {
 			 * @return Resultado do Select
 			 * 
 			 * Executa instrução de SQL de Select
+			 * @throws ExceptionDatabase 
 			 */
-			public ResultSet execute() {
+			public ResultSet execute() throws ExceptionDatabase {
 				try {
 					return this.stm.executeQuery();			
 				} catch (Exception e) {
-					new ExceptionDatabase(e);
-					return null;
+					throw new ExceptionDatabase(e);					
 				}
 			}			
 		}
@@ -135,11 +133,12 @@ public class Dao {
 			 * @param Instrução de banco de dados
 			 * @param parametros
 			 * @return True para inserido ou false para não inserido
+			 * @throws ExceptionDatabase 
 			 * @throws SQLException
 			 * 
 			 * Realiza um insert a base de dados
 			 */
-			public Dml insert(final String query, final Object...params) {			
+			public Dml insert(final String query, final Object...params) throws ExceptionDatabase {			
 				
 				prepararStatement(query);
 				preencherStatement(params);
@@ -152,11 +151,12 @@ public class Dao {
 			 * @param Instrução de banco de dados
 			 * @param parametros
 			 * @return True para atualizado ou false para não atualizado
+			 * @throws ExceptionDatabase 
 			 * @throws SQLException
 			 * 
 			 * Realiza uma transação de update na base de dados
 			 */
-			public Dml update(final String query, final Object...params) throws SQLException{					
+			public Dml update(final String query, final Object...params) throws ExceptionDatabase {					
 				prepararStatement(query);
 				preencherStatement(params);
 				
@@ -170,8 +170,9 @@ public class Dao {
 			 * @throws SQLException
 			 * 
 			 * Realiza a exclusão de um dados na base de dados
+			 * @throws ExceptionDatabase 
 			 */
-			public Dml delete(final String query, final Object...params) throws SQLException{		
+			public Dml delete(final String query, final Object...params) throws ExceptionDatabase{		
 				
 				prepararStatement(query);
 				preencherStatement(params);
@@ -183,16 +184,16 @@ public class Dao {
 			 * @return True para executado com sucesso e False para Erro
 			 * 
 			 * Executa instrução de SQL
+			 * @throws ExceptionDatabase 
 			 */
-			public Boolean execute() {
+			public Boolean execute() throws ExceptionDatabase {
 				try {
 					this.stm.execute();
 					this.conn.commit();
 					return true;
 				} catch (Exception e) {
-					new ExceptionDatabase(e);
 					cancelarTransacao();
-					return false;
+					throw new ExceptionDatabase(e);					
 				} finally {
 					finalizar();					
 				}
@@ -202,13 +203,14 @@ public class Dao {
 			 * @param query
 			 * 
 			 * Prepara instrução de SQL para ser executada
+			 * @throws ExceptionDatabase 
 			 */
-			private void prepararStatement(final String query) {
+			private void prepararStatement(final String query) throws ExceptionDatabase {
 				try {
 					this.conn.setAutoCommit(false);
 					this.stm = this.conn.prepareStatement(query);
 				} catch (SQLException e) {
-					new ExceptionDatabase("Problema ao preparar instrução", e);
+					throw new ExceptionDatabase("Problema ao preparar instrução", e);
 				}								
 			}
 			
@@ -217,35 +219,39 @@ public class Dao {
 			 * 
 			 * Preenche um Objeto PreparedStatement com os parametros fornecidos
 			 * pelo usuário
+			 * @throws ExceptionDatabase 
+			 * @throws Exception 
 			 */
-			private void preencherStatement(final Object...params) {
+			private void preencherStatement(final Object...params) throws ExceptionDatabase {
 				try {
 					this.stm = Utilidades.preencherCampos(this.stm, params);
 				} catch (Exception e) {
-					new Exception("Erro ao preencher campos", e);
+					throw new ExceptionDatabase("Erro ao preencher campos", e);
 				}
 			}
 			
 			/**
 			 * Realiza uma transação de Rollback
+			 * @throws ExceptionDatabase 
 			 */
-			private void cancelarTransacao(){
+			private void cancelarTransacao() throws ExceptionDatabase{
 				try {
 					this.conn.rollback();
 				} catch (Exception e) {
-					new ExceptionDatabase("Erro ao Executar Rollback", e);
+					throw new ExceptionDatabase("Erro ao Executar Rollback", e);
 				}
 			}
 			
 			/**
 			 * Finaliza todas as conexões com o banco de dados
+			 * @throws ExceptionDatabase 
 			 */
-			private void finalizar(){				
+			private void finalizar() throws ExceptionDatabase{				
 				try {
 					stm.close();
 					conn.close();
 				} catch (Exception e) {
-					new ExceptionDatabase("Erro ao fechar conexao", e);
+					throw new ExceptionDatabase("Erro ao fechar conexao", e);
 				}
 			}
 		}
