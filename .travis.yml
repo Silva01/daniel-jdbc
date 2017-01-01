@@ -4,9 +4,9 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS teste;'
-  - mysql -e 'CREATE USER 'teste'@'localhost' IDENTIFIED BY '1234';'
-  - mysql -e 'GRANT ALL PRIVILEGES ON * . * TO 'teste'@'localhost';'
+  - mysql -e "CREATE USER 'teste'@'localhost' IDENTIFIED BY '1234';"
+  - mysql -e "GRANT ALL PRIVILEGES ON * . * TO 'teste'@'localhost';"
   - mysql -e 'FLUSH PRIVILEGES;'
-  - mysql -e 'INSERT INTO teste.teste (`nome`, `idade`) VALUES ('Daniel', 27);'
+  - mysql -e "INSERT INTO teste.teste (`nome`, `idade`) VALUES ('Daniel', 27);"
 jdk:
  - oraclejdk8
