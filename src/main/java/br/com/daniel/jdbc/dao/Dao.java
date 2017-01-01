@@ -106,20 +106,12 @@ public class Dao {
 			 */
 			public ResultSet execute() {
 				try {
-					return this.stm.executeQuery();				
+					return this.stm.executeQuery();			
 				} catch (Exception e) {
 					new ExceptionDatabase(e);
 					return null;
-				} finally {
-					try {
-						stm.close();
-						conn.close();
-					} catch (Exception e) {
-						new ExceptionDatabase(e);
-						return null;
-					}				
 				}
-			}
+			}			
 		}
 		
 		
@@ -194,9 +186,9 @@ public class Dao {
 			 */
 			public Boolean execute() {
 				try {
-					Boolean result = this.stm.execute();
+					this.stm.execute();
 					this.conn.commit();
-					return result;
+					return true;
 				} catch (Exception e) {
 					new ExceptionDatabase(e);
 					cancelarTransacao();

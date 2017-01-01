@@ -43,7 +43,7 @@ public class Conexao {
 	public Connection conectarMysql() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(host, userDb, passDb);
+			return DriverManager.getConnection("jdbc:mysql://"+ host, userDb, passDb);
 		} catch (NaoConectadoDbException e) {
 			new NaoConectadoDbException(e);
 			return null;
