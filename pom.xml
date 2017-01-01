@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>br.com.jdbc.daniel</groupId>
   <artifactId>JDBC-DANIEL</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.4</version>
   <name>Daniel Silva</name>
 
   <properties>
