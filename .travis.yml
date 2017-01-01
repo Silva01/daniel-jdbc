@@ -5,7 +5,7 @@ services:
 before_install:
   - mysql -utravis -e 'CREATE DATABASE IF NOT EXISTS teste;'
   - mysql -e "CREATE USER 'teste'@'localhost' IDENTIFIED BY '1234';"
-  - mysql -e "CREATE TABLE teste.teste ('id' INT NOT NULL AUTO_INCREMENT, 'nome' VARCHAR(45) NULL, 'idade' INT NULL, PRIMARY KEY ('id'), UNIQUE INDEX 'id_UNIQUE' ('id' ASC));"
+  - mysql -e "CREATE TABLE teste.teste (id int(11) NOT NULL AUTO_INCREMENT, nome varchar(45) NOT NULL, idade int(11) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;"
   - mysql -e "INSERT INTO teste.teste ('nome', 'idade') VALUES ('Daniel', 27);"
 jdk:
  - oraclejdk8
