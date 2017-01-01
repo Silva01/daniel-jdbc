@@ -49,19 +49,19 @@ public class Utilidades {
 	public static PreparedStatement preencherCampos(final PreparedStatement stm, final Object...params) throws Exception{
 		for (int i = 0; i < params.length; i++) {
 			if (params[i] instanceof String) {
-				stm.setString(i, Utilidades.convertTo(params[i]));
+				stm.setString(i + 1, Utilidades.convertTo(params[i]));
 			} else if (params[i] instanceof Integer) {
-				stm.setInt(i, Utilidades.convertTo(params[i]));
+				stm.setInt(i + 1, Utilidades.convertTo(params[i]));
 			} else if (params[i] instanceof Boolean) {
-				stm.setBoolean(i, Utilidades.convertTo(params[i]));
+				stm.setBoolean(i + 1, Utilidades.convertTo(params[i]));
 			} else if (params[i] instanceof Date) {
-				stm.setDate(i, Utilidades.convertTo(params[i]));
+				stm.setDate(i + 1, Utilidades.convertTo(params[i]));
 			} else if (params[i] instanceof Double) {
-				stm.setDouble(i, Utilidades.convertTo(params[i]));
+				stm.setDouble(i + 1, Utilidades.convertTo(params[i]));
 			} else if (params[i] instanceof Float) {
-				stm.setFloat(i, Utilidades.convertTo(params[i]));
+				stm.setFloat(i + 1, Utilidades.convertTo(params[i]));
 			} else {
-				stm.setObject(i, params[i]);
+				stm.setObject(i + 1, params[i]);
 			}
 		}
 		
