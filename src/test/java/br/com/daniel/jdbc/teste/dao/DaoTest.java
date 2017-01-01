@@ -20,16 +20,16 @@ public class DaoTest {
 				.execute();
 		
 		String nome = null;
-		Integer id = null;
+		Integer idade = null;
 		
 		while (result.next()) {
 			nome = result.getString("nome");
-			id = result.getInt("id");
+			idade = result.getInt("idade");
 			break;			
 		}
 		
 		Assert.assertEquals("Daniel", nome);
-		Assert.assertEquals(Integer.valueOf(1), id);
+		Assert.assertEquals(Integer.valueOf(27), idade);
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class DaoTest {
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
 				.dql(new Conexao().conectarMysql())
-				.select("SELECT id, nome FROM teste.teste WHERE id = ? AND nome = ?", 1, "Daniel")
+				.select("SELECT id, nome FROM teste.teste WHERE id = ? AND nome = ?", 27, "Daniel")
 				.execute();
 		
 		String nome = null;
@@ -53,31 +53,7 @@ public class DaoTest {
 		Assert.assertEquals(Integer.valueOf(1), id);
 	}
 	
-	@Test
-	public void deveraRealizarUmInsertNaBaseDeDados() throws SQLException{
-		Dao dao = new Dao();
-		
-		Boolean result = dao.sid().dml(new Conexao().conectarMysql())
-				.insert("INSERT INTO `teste`.`teste` (`nome`, `idade`) VALUES (?, ?);", "Teste", 10)
-				.execute();
-		
-		Assert.assertEquals(true, result);
-		
-		ResultSet resultado = dao.sid().dql(new Conexao().conectarMysql())
-				.select("SELECT nome, idade FROM teste.teste WHERE nome = ? AND idade = ?", "Teste", 10)
-				.execute();
-		
-		String nome = null;
-		Integer idade = null;
-		
-		while (resultado.next()) {
-			nome = resultado.getString("nome");
-			idade = resultado.getInt("idade");			
-		}
-		
-		Assert.assertEquals("Teste", nome);
-		Assert.assertEquals(Integer.valueOf(10), idade);
-	}
+
 	
 	@Test
 	public void deveraAtualizarUmRegistroNaBaseDeDados() throws SQLException{
