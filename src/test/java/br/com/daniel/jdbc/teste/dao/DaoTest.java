@@ -16,7 +16,28 @@ public class DaoTest {
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
 				.dql(new Conexao().conectarMysql())
-				.select("SELECT id, nome FROM teste.teste")
+				.select("SELECT idade, nome FROM teste.teste")
+				.execute();
+		
+		String nome = null;
+		Integer idade = null;
+		
+		while (result.next()) {
+			nome = result.getString("nome");
+			idade = result.getInt("idade");
+			break;			
+		}
+		
+		Assert.assertEquals("Daniel", nome);
+		Assert.assertEquals(Integer.valueOf(10), idade);
+	}
+	
+	@Test
+	public void deveraRealizarUmSelectComParametros() throws SQLException{
+		Dao dao = new Dao();
+		ResultSet result = dao.sid()
+				.dql(new Conexao().conectarMysql())
+				.select("SELECT idade, nome FROM teste.teste WHERE idade = ? AND nome = ?", 27, "Daniel")
 				.execute();
 		
 		String nome = null;
@@ -30,27 +51,6 @@ public class DaoTest {
 		
 		Assert.assertEquals("Daniel", nome);
 		Assert.assertEquals(Integer.valueOf(27), idade);
-	}
-	
-	@Test
-	public void deveraRealizarUmSelectComParametros() throws SQLException{
-		Dao dao = new Dao();
-		ResultSet result = dao.sid()
-				.dql(new Conexao().conectarMysql())
-				.select("SELECT id, nome FROM teste.teste WHERE id = ? AND nome = ?", 27, "Daniel")
-				.execute();
-		
-		String nome = null;
-		Integer id = null;
-		
-		while (result.next()) {
-			nome = result.getString("nome");
-			id = result.getInt("id");
-			break;			
-		}
-		
-		Assert.assertEquals("Daniel", nome);
-		Assert.assertEquals(Integer.valueOf(1), id);
 	}
 	
 
