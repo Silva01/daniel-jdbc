@@ -2,8 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>br.com.jdbc.daniel</groupId>
   <artifactId>JDBC-DANIEL</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2</version>
   <name>Daniel Silva</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.language>java</sonar.language>
+  </properties>
   
     	<build>
 		<plugins>
@@ -20,10 +25,18 @@
 	</build>
 	
 	<dependencies>
+	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.5</version>
+		</dependency>
+		
 	</dependencies>
 </project>
