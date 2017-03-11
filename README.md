@@ -148,7 +148,7 @@ ResultSet result = dao
 				  .select("SELECT idade, nome FROM teste.teste")
 				  .execute();
 
-		while (result.next()) {			
-			TesteBean bean = (TesteBean) Utilidades.convertToObject(bean, result);
-		}
+while (result.next()) {			
+	TesteBean bean = (TesteBean) Utilidades.convertToObject(bean, result);
+}
 ```
