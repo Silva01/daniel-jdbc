@@ -26,10 +26,13 @@ public class Conexao {
 	private String passDb;
 	
 	
+
 	/**
 	 * Contrutor no qual inicializa as principais variaveis que contém informações de 
-	 * conexão com o banco de dados
+	 * conexão com o banco de dados, o usuário necessita passar como parametro a URI 
+	 * do arquivo .properties
 	 * 
+	 * @param url
 	 * @throws NaoConectadoDbException
 	 */
 	public Conexao(final String url) throws NaoConectadoDbException {
@@ -70,8 +73,7 @@ public class Conexao {
 	 * @throws NaoConectadoDbException 
 	 */
 	public Connection conectarMysql() throws NaoConectadoDbException {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+		try {			
 			return DriverManager.getConnection("jdbc:mysql://"+ host, userDb, passDb);
 		} catch (NaoConectadoDbException e) {
 			throw new NaoConectadoDbException(e, "Erro ao conectar na base de dados");			

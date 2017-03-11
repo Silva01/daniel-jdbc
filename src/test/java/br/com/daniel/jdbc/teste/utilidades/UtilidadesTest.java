@@ -56,7 +56,7 @@ public class UtilidadesTest {
 		String nome = "";
 		
 		ResultSet result = dao.sid()
-				.dql(new Conexao().conectarMysql())
+				.dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT * FROM teste.teste LIMIT 1")
 				.execute();
 		
