@@ -9,7 +9,7 @@ daniel-jdbc suporta os seguintes bancos de dados:
  - [ ] Oracle
  - [ ] SQL Server
 
-Para utilizar basta baixar o arquivo [.jar](https://github.com/Silva01/daniel-jdbc/releases/tag/v1.0.5) e o adicionar ao Build Path do projeto, desta forma o projeto poderá carregar as classes responsável por executar as funcionalidades de transação de banco de dados.
+Para utilizar basta baixar o arquivo [.jar](https://github.com/Silva01/daniel-jdbc/releases/tag/v1.0.5) e o adicionar ao Build Path do projeto, desta forma o projeto poderá carregar as classes responsáveis por executar as funcionalidades de transação de banco de dados.
 
 ## Exemplos de Select: 
 
@@ -90,4 +90,65 @@ Boolean response = dao
 				.dml(new Conexao("propriedades.properties").conectarMysql())
 				.delete("DELETE FROM `teste`.`teste` WHERE nome = ? AND idade = ?", "Teste2", 22)
 				.execute();
+```
+
+## Mapeamento de Um Objeto
+
+Para mapear um um objeto precisamos primeiro criar a classe que represente a tabela de banco de dados, abaixo segue uma representação da tabela teste.
+
+```java
+import br.com.daniel.jdbc.mapeamento.Coluna;
+
+public class TesteBean {
+
+	private Integer id;
+	private String nome;
+	private Integer idade;
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	@Coluna("ID")
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	@Coluna("NOME")
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public Integer getIdade() {
+		return idade;
+	}
+	
+	@Coluna("IDADE")
+	public void setIdade(Integer idade) {
+		this.idade = idade;
+	}	
+}
+
+```
+
+Observe que para o correto funcionamento da API de mapeamento, é necessário que os metódos **Set** possuam a anotação **@Coluna** seguido do **nome da tabela**.
+
+Após realizar esta configuração, a classe Utilidades possui um método que irá realizar o preenchimento do objeto de forma automatica, abaixo segue o exemplo.
+
+```java
+Dao dao = new Dao();
+
+ResultSet result = dao
+				  .sid()
+				  .dql(new Conexao(host, userDB, passDb).conectarMysql())
+				  .select("SELECT idade, nome FROM teste.teste")
+				  .execute();
+
+		while (result.next()) {			
+			TesteBean bean = (TesteBean) Utilidades.convertToObject(bean, result);
+		}
 ```
