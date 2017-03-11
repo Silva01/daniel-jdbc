@@ -69,7 +69,7 @@ public class UtilidadesTest {
 			bean = (TesteBean) Utilidades.convertToObject(bean, result);			
 		}
 		
-		
+		result.close();
 		Assert.assertEquals(id, bean.getId().intValue());
 		Assert.assertEquals(nome, bean.getNome());
 		Assert.assertEquals(idade, bean.getIdade().intValue());
