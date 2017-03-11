@@ -11,7 +11,8 @@ import br.com.daniel.jdbc.mapeamento.Coluna;
  * @author Daniel
  * @version 1.0.0
  * 
- * Classe com métodos úteis para desenvolvimento
+ * Classe com métodos úteis para Manipulação de dados, possui metódos de mapeamento e 
+ * Conversão de dados.
  *
  */
 public class Utilidades {

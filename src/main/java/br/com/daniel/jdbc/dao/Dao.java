@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import br.com.daniel.jdbc.conexao.Conexao;
 import br.com.daniel.jdbc.exception.ExceptionDatabase;
 import br.com.daniel.jdbc.exception.NaoConectadoDbException;
 import br.com.daniel.jdbc.util.Utilidades;
@@ -14,8 +15,34 @@ import br.com.daniel.jdbc.util.Utilidades;
  * @version 1.0.1
  * 
  * Dao básico no qual realiza as principais operações de transação 
- * no banco de dados
+ * no banco de dados.
+ * 
+ * 
+ * Exemplo Select:
+ * 
+ * 	ResultSet result = dao.sid()
+ *				.dql(new Conexao("propriedades.properties").conectarMysql())
+ *				.select("SELECT idade, nome FROM teste.teste")
+ *				.execute();
  *
+ *
+ * Exemplo Insert:
+ * 
+ * 	Boolean result = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
+ * 				.insert("INSERT INTO `teste`.`teste` (`nome`, `idade`) VALUES (?, ?);", "Teste", 10)
+ * 				.execute();
+ * 
+ * 
+ * Exemplo Update:
+ * 
+ * 	Boolean response = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
+ *				.update("UPDATE `teste`.`teste` SET `nome`= ?, `idade`= ? WHERE `id`= ? ","Teste2", 22, id)
+ *				.execute();
+ *
+ * Exemplo Delete:
+ *  Boolean response = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
+ *				.delete("DELETE FROM `teste`.`teste` WHERE nome = ? AND idade = ?", "Teste2", 22)
+ *				.execute();
  */
 public class Dao {	
 

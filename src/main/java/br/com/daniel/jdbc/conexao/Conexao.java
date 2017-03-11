@@ -80,19 +80,8 @@ public class Conexao {
 		} catch (Exception e) {
 			throw new NaoConectadoDbException((NaoConectadoDbException) e, "Erro ao conectar na base de dados");
 		}
-	}
+	}	
 	
-	public Connection conectarPostgrees(){
-		return null;
-	}
-	
-	public Connection conectarOracle(){
-		return null;
-	}
-	
-	public Connection conectarSqlServer(){
-		return null;
-	}
 	
 	/**
 	 * @param campo do arquivo
