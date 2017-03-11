@@ -15,7 +15,7 @@ public class DaoTest {
 	public void deveraRealizarUmSelect() throws ExceptionDatabase, Exception{
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
-				.dql(new Conexao().conectarMysql())
+				.dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT idade, nome FROM teste.teste")
 				.execute();
 		
@@ -36,7 +36,7 @@ public class DaoTest {
 	public void deveraRealizarUmSelectComParametros() throws ExceptionDatabase, Exception{
 		Dao dao = new Dao();
 		ResultSet result = dao.sid()
-				.dql(new Conexao().conectarMysql())
+				.dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT idade, nome FROM teste.teste WHERE idade = ? AND nome = ?", 27, "Daniel")
 				.execute();
 		
@@ -57,13 +57,13 @@ public class DaoTest {
 	public void deveraRealizarUmInsertNaBaseDeDados() throws ExceptionDatabase, Exception{
  		Dao dao = new Dao();
  		
- 		Boolean result = dao.sid().dml(new Conexao().conectarMysql())
+ 		Boolean result = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
  				.insert("INSERT INTO `teste`.`teste` (`nome`, `idade`) VALUES (?, ?);", "Teste", 10)
  				.execute();
  		
  		Assert.assertEquals(true, result);
  		
- 		ResultSet resultado = dao.sid().dql(new Conexao().conectarMysql())
+ 		ResultSet resultado = dao.sid().dql(new Conexao("propriedades.properties").conectarMysql())
  				.select("SELECT nome, idade FROM teste.teste WHERE nome = ? AND idade = ?", "Teste", 10)
  				.execute();
  		
@@ -92,7 +92,7 @@ public class DaoTest {
 		
 		// Busca usuário a ser alterado na Base de dados
 		
-		ResultSet result1 = dao.sid().dql(new Conexao().conectarMysql())
+		ResultSet result1 = dao.sid().dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT * FROM teste.teste WHERE nome = ? AND idade = ?", "Teste", 10)
 				.execute();
 		
@@ -108,7 +108,7 @@ public class DaoTest {
 		
 		// Atualiza dados
 		
-		Boolean response = dao.sid().dml(new Conexao().conectarMysql())
+		Boolean response = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
 				.update("UPDATE `teste`.`teste` SET `nome`= ?, `idade`= ? WHERE `id`= ? ","Teste2", 22, id)
 				.execute();
 		
@@ -117,7 +117,7 @@ public class DaoTest {
 		
 		// Verifica se os dados estão atualizados
 		
-		result1 = dao.sid().dql(new Conexao().conectarMysql())
+		result1 = dao.sid().dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT * FROM teste.teste WHERE nome = ? AND idade = ?", "Teste2", 22)
 				.execute();
 		
@@ -141,7 +141,7 @@ public class DaoTest {
 		
 		// Busca um registro para ver se ele existe, caso ele exista o retorno será 1 caso contrário 0
 		
-		ResultSet result = dao.sid().dql(new Conexao().conectarMysql())
+		ResultSet result = dao.sid().dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT count(id) AS quant FROM teste.teste WHERE nome = ? AND idade = ?", "Teste2", 22)
 				.execute();
 		
@@ -154,7 +154,7 @@ public class DaoTest {
 		
 		// Exclui o registro 
 		
-		Boolean response = dao.sid().dml(new Conexao().conectarMysql())
+		Boolean response = dao.sid().dml(new Conexao("propriedades.properties").conectarMysql())
 				.delete("DELETE FROM `teste`.`teste` WHERE nome = ? AND idade = ?", "Teste2", 22)
 				.execute();
 		
@@ -165,7 +165,7 @@ public class DaoTest {
 		* retorna 1
 		*/
 		
-		result = dao.sid().dql(new Conexao().conectarMysql())
+		result = dao.sid().dql(new Conexao("propriedades.properties").conectarMysql())
 				.select("SELECT count(id) AS quant FROM teste.teste WHERE nome = ? AND idade = ?", "Teste2", 22)
 				.execute();
 		
