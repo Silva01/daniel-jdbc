@@ -1,7 +1,6 @@
 package br.com.daniel.jdbc.teste.dao;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.junit.Assert;
 import org.junit.Test;

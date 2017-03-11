@@ -1,7 +1,11 @@
 package br.com.daniel.jdbc.util;
 
+import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Date;
+
+import br.com.daniel.jdbc.mapeamento.Coluna;
 
 /**
  * @author Daniel
@@ -66,5 +70,39 @@ public class Utilidades {
 		}
 		
 		return stm;
+	}
+	
+	
+	/**
+	 * Converte um dado recebido da consulta no banco de dados e o separa suas 
+	 * colunas em atributos de um objeto que representa a tabela do banco de dados, 
+	 * para que os dados da tabela seja atribuidos a seus atributos, cada método Set 
+	 * deverá possuir a anotação @Coluna e o Nome que representa sua coluna.
+	 * 
+	 * Exemplo:
+	 * 	@Coluna('ID')
+	 * 	public void setId(Integer id){
+	 * 		this.id = id;
+	 * 	}
+	 * 
+	 * 
+	 * @param obj
+	 * @param resultSet
+	 * @return
+	 */
+	public static Object convertToObject(final Object obj, final ResultSet resultSet) {
+		try {
+			Class<?> classe = obj.getClass();			
+			
+			for (Method metodo : classe.getDeclaredMethods()) {				
+				if (metodo.isAnnotationPresent(Coluna.class)) {
+					metodo.invoke(obj, resultSet.getObject(metodo.getAnnotation(Coluna.class).value()));				
+				}
+			}		
+			
+			return obj;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

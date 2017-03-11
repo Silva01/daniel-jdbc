@@ -24,6 +24,12 @@ public class Conexao {
 	private String passDb;
 	
 	
+	/**
+	 * Contrutor no qual inicializa as principais variaveis que contém informações de 
+	 * conexão com o banco de dados
+	 * 
+	 * @throws NaoConectadoDbException
+	 */
 	public Conexao() throws NaoConectadoDbException {
 		try {
 			this.host = this.dados("db.host");

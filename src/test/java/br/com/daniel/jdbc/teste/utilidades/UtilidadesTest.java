@@ -1,10 +1,14 @@
 package br.com.daniel.jdbc.teste.utilidades;
 
+import java.sql.ResultSet;
 import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.com.daniel.jdbc.conexao.Conexao;
+import br.com.daniel.jdbc.dao.Dao;
+import br.com.daniel.jdbc.teste.bean.TesteBean;
 import br.com.daniel.jdbc.util.Utilidades;
 
 public class UtilidadesTest {
@@ -43,5 +47,32 @@ public class UtilidadesTest {
 	public void DeveraRetornarUmaFloat(){
 		Float dado = Utilidades.convertTo(1.0f);
 		Assert.assertEquals(true, (dado instanceof Float));
+	}
+	
+	@Test
+	public void deveraObterDadosDoBancoEAdicionarEmUmObjeto() throws Exception {
+		Dao dao = new Dao();
+		int id = 0, idade = 0;
+		String nome = "";
+		
+		ResultSet result = dao.sid()
+				.dql(new Conexao().conectarMysql())
+				.select("SELECT * FROM teste.teste LIMIT 1")
+				.execute();
+		
+		TesteBean bean = new TesteBean();
+		
+		while (result.next()) {
+			id = result.getInt("ID");
+			idade = result.getInt("IDADE");
+			nome = result.getString("Nome");
+			bean = (TesteBean) Utilidades.convertToObject(bean, result);			
+		}
+		
+		
+		Assert.assertEquals(id, bean.getId().intValue());
+		Assert.assertEquals(nome, bean.getNome());
+		Assert.assertEquals(idade, bean.getIdade().intValue());
+		
 	}
 }
